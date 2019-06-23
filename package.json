@@ -1,24 +1,41 @@
 {
-  "name": "typegram",
-  "version": "1.0.0",
-  "description": "TypeScript Telegram bot API client.",
-  "main": "index.js",
-  "repository": "https://github.com/devmattrick/typegram.git",
-  "author": "Matthew McCune <contact@matthew.cx>",
-  "license": "MIT",
-  "private": false,
-  "scripts": {
-    "lint": "tslint --project .",
-    "lint:fix": "tslint --project . --fix"
-  },
-  "dependencies": {
-    "axios": "^0.18.0",
-    "form-data": "^2.3.3"
-  },
-  "devDependencies": {
-    "@types/form-data": "^2.2.1",
-    "ts-node": "^8.1.0",
-    "tslint": "^5.15.0",
-    "typescript": "^3.4.3"
-  }
+    "name": "typegram",
+    "version": "1.0.0",
+    "description": "TypeScript Telegram bot API client.",
+    "main": "index.js",
+    "repository": "https://github.com/devmattrick/typegram.git",
+    "author": "Matthew McCune <contact@matthew.cx>",
+    "license": "MIT",
+    "private": false,
+    "husky": {
+        "hooks": {
+            "pre-commit": "yarn prettify && yarn lint:fix && yarn stricter"
+        }
+    },
+    "scripts": {
+        "lint": "eslint . --ext .ts",
+        "lint:fix": "eslint . --ext .ts --fix",
+        "prettify": "yarn prettier --write 'src/**/*.ts' > /dev/null"
+    },
+    "dependencies": {
+        "axios": "^0.18.0",
+        "form-data": "^2.3.3"
+    },
+    "devDependencies": {
+        "@types/form-data": "^2.2.1",
+        "@types/glob": "^7.1.1",
+        "@typescript-eslint/eslint-plugin": "^1.10.2",
+        "@typescript-eslint/parser": "^1.10.2",
+        "eslint": "^5.16.0",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-config-prettier": "^5.0.0",
+        "eslint-plugin-import": "^2.17.3",
+        "eslint-plugin-prettier": "^3.1.0",
+        "glob": "^7.1.4",
+        "husky": "^2.4.1",
+        "prettier": "^1.18.2",
+        "stricter": "^0.3.4",
+        "ts-node": "^8.1.0",
+        "typescript": "^3.4.3"
+    }
 }
