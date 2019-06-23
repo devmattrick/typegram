@@ -26,29 +26,26 @@ module.exports = {
         'stricter/unused-files': [
             {
                 level: 'warning',
-                include: [/\*\.ts/],
+                include: [/\.ts$/],
                 config: {
                     entry: [
-                        /foo\.eslintrc\.js/,
-                        /foo\.*\.md/,
-                        /foo\/bar\/index\.js/,
-                        /foo\/baz\/index\.js/,
+                        // index.ts is the typegram root
+                        /index\.ts/,
+
+                        // client/index.ts is the typegram client root
+                        /client\/index\.ts/,
+
+                        // models/*/*.ts should be kept as they're all the types
+                        /models\/[^/]+\/[^/]+\.ts/,
                     ],
-                    relatedEntry: [
-                        /foo\.*spec\.js/,
-                        /foo\.*test\.js/,
-                        /foo\.*story\.js/,
-                    ],
+                    relatedEntry: [],
                 },
             },
         ],
         'stricter/circular-dependencies': [
             {
                 level: 'error',
-                config: {
-                    checkSubTreeCycle: true,
-                    registries: ['**/foo/bar', 'baz'],
-                },
+                config: { checkSubTreeCycle: true },
             },
         ],
     },
