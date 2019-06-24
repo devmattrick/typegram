@@ -19,5 +19,12 @@
         "no-undef": "off",
         "import/prefer-default-export": "off",
         "@typescript-eslint/explicit-function-return-type": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".ts"]
+            }
+        }
     }
 }

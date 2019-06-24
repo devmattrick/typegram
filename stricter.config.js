@@ -13,7 +13,11 @@ module.exports = {
                     'index.ts': { type: 'file' },
                 },
                 client: {
+                    'bot.ts': { type: 'file' },
                     'index.ts': { type: 'file' },
+                    'polling.ts': { type: 'file' },
+                    'types.ts': { type: 'file' },
+                    'util.ts': { type: 'file' },
                 },
                 models: {
                     '*': { type: 'dir', rule: 'models/model' },
