@@ -9,13 +9,22 @@
     "private": false,
     "husky": {
         "hooks": {
-            "pre-commit": "yarn prettify && yarn lint:fix && yarn tsc && yarn stricter"
+            "pre-commit": "yarn tsc stricter-rules/*.rule.ts && lint-staged"
         }
     },
-    "scripts": {
-        "lint": "eslint . --ext .ts",
-        "lint:fix": "eslint . --ext .ts --fix",
-        "prettify": "yarn prettier --write 'src/**/*.ts' > /dev/null"
+    "lint-staged": {
+        "*.ts": [
+            "prettier --write",
+            "eslint --fix",
+            "git add"
+        ],
+        "*.{md,html,json}": [
+            "prettier --write",
+            "git add"
+        ],
+        "*": [
+            "stricter"
+        ]
     },
     "dependencies": {
         "axios": "^0.18.0",
@@ -33,6 +42,7 @@
         "eslint-plugin-prettier": "^3.1.0",
         "glob": "^7.1.4",
         "husky": "^2.4.1",
+        "lint-staged": "^8.2.1",
         "prettier": "^1.18.2",
         "stricter": "^0.3.4",
         "ts-node": "^8.1.0",
