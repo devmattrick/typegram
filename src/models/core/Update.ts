@@ -1,3 +1,5 @@
+import { Decoder } from '@mojotech/json-type-validation';
+
 import ChosenInlineResult from '../inline/ChosenInlineResult';
 import InlineQuery from '../inline/InlineQuery';
 import PreCheckoutQuery from '../payments/PreCheckoutQuery';

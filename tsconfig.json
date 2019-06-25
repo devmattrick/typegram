@@ -1,12 +1,17 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "*": ["src/*", "node_modules/*"]
+        },
         "lib": ["es2015"],
-        "allowSyntheticDefaultImports": false,
+        "module": "esnext",
+        "moduleResolution": "node",
         "allowJs": false,
         "checkJs": false,
+        "allowSyntheticDefaultImports": false,
         "esModuleInterop": false,
         "importHelpers": true,
-        "incremental": true,
         "strict": true,
         "alwaysStrict": true,
         "noUnusedLocals": true,
@@ -16,7 +21,8 @@
         "noImplicitReturns": true,
         "noImplicitThis": true,
         "noFallthroughCasesInSwitch": true,
-        "noResolve": true,
-        "noStrictGenericChecks": true
+        "noStrictGenericChecks": true,
+        "forceConsistentCasingInFileNames": true,
+        "newLine": "LF"
     }
 }
