@@ -10,13 +10,13 @@ export default interface KeyboardButton {
     text: string;
 
     /**
-     * Optional. If true, the user&#x27;s phone number will be sent as a contact when the button is pressed. Available in
+     * Optional. If true, the user's phone number will be sent as a contact when the button is pressed. Available in
      * private chats only
      */
     request_contact?: boolean;
 
     /**
-     * Optional. If true, the user&#x27;s current location will be sent when the button is pressed. Available in private
+     * Optional. If true, the user's current location will be sent when the button is pressed. Available in private
      * chats only
      */
     request_location?: boolean;

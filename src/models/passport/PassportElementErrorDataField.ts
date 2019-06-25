@@ -1,6 +1,7 @@
 /**
  * Represents an issue in one of the data fields that was provided by the user. The error is considered resolved when
- * the field&#x27;s value changes.
+ * the field's value changes.
+ * TODO: strengthen types
  */
 export default interface PassportElementErrorDataField {
     /**
@@ -9,7 +10,7 @@ export default interface PassportElementErrorDataField {
     source: string;
 
     /**
-     * The section of the user&#x27;s Telegram Passport which has the error, one of “personal_details”, “passport”,
+     * The section of the user's Telegram Passport which has the error, one of “personal_details”, “passport”,
      * “driver_license”, “identity_card”, “internal_passport”, “address”
      */
     type:

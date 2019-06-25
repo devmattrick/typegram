@@ -2,6 +2,7 @@ import PassportFile from './PassportFile';
 
 /**
  * Contains information about documents or other Telegram Passport elements shared with the bot by the user.
+ * TODO: strengthen types
  */
 export default interface EncryptedPassportElement {
     /**
@@ -32,12 +33,12 @@ export default interface EncryptedPassportElement {
     data?: string;
 
     /**
-     * Optional. User&#x27;s verified phone number, available only for “phone_number” type
+     * Optional. User's verified phone number, available only for “phone_number” type
      */
     phone_number?: string;
 
     /**
-     * Optional. User&#x27;s verified email address, available only for “email” type
+     * Optional. User's verified email address, available only for “email” type
      */
     email?: string;
 

@@ -1,6 +1,6 @@
 /**
  * This object represents a file uploaded to Telegram Passport. Currently all Telegram Passport files are in JPEG format
- * when decrypted and don&#x27;t exceed 10MB.
+ * when decrypted and don't exceed 10MB.
  */
 export default interface PassportFile {
     /**

@@ -1,6 +1,7 @@
 /**
  * Represents an issue with one of the files that constitute the translation of a document. The error is considered
  * resolved when the file changes.
+ * TODO: strengthen types
  */
 export default interface PassportElementErrorTranslationFile {
     /**
@@ -9,7 +10,7 @@ export default interface PassportElementErrorTranslationFile {
     source: string;
 
     /**
-     * Type of element of the user&#x27;s Telegram Passport which has the issue, one of “passport”, “driver_license”,
+     * Type of element of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”,
      * “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”,
      * “passport_registration”, “temporary_registration”
      */

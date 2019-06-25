@@ -1,6 +1,7 @@
 /**
  * Represents an issue with a list of scans. The error is considered resolved when the list of files containing the
  * scans changes.
+ * TODO: strengthen types
  */
 export default interface PassportElementErrorFiles {
     /**
@@ -9,7 +10,7 @@ export default interface PassportElementErrorFiles {
     source: string;
 
     /**
-     * The section of the user&#x27;s Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”,
+     * The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”,
      * “rental_agreement”, “passport_registration”, “temporary_registration”
      */
     type:

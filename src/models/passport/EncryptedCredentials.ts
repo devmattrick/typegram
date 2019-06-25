@@ -4,7 +4,7 @@
  */
 export default interface EncryptedCredentials {
     /**
-     * Base64-encoded encrypted JSON-serialized data with unique user&#x27;s payload, data hashes and secrets required for
+     * Base64-encoded encrypted JSON-serialized data with unique user's payload, data hashes and secrets required for
      * EncryptedPassportElement decryption and authentication
      */
     data: string;
@@ -15,7 +15,7 @@ export default interface EncryptedCredentials {
     hash: string;
 
     /**
-     * Base64-encoded secret, encrypted with the bot&#x27;s public RSA key, required for data decryption
+     * Base64-encoded secret, encrypted with the bot's public RSA key, required for data decryption
      */
     secret: string;
 }

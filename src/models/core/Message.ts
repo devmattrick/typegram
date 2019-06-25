@@ -21,7 +21,7 @@ import Voice from './Voice';
 /**
  * This object represents a message.
  */
-export default interface Message {
+interface Message {
     /**
      * Unique message identifier inside this chat
      */
@@ -43,37 +43,6 @@ export default interface Message {
     chat: Chat;
 
     /**
-     * Optional. For forwarded messages, sender of the original message
-     */
-    forward_from?: User;
-
-    /**
-     * Optional. For messages forwarded from channels, information about the original channel
-     */
-    forward_from_chat?: Chat;
-
-    /**
-     * Optional. For messages forwarded from channels, identifier of the original message in the channel
-     */
-    forward_from_message_id?: number;
-
-    /**
-     * Optional. For messages forwarded from channels, signature of the post author if present
-     */
-    forward_signature?: string;
-
-    /**
-     * Optional. Sender&#x27;s name for messages forwarded from users who disallow adding a link to their account in
-     * forwarded messages
-     */
-    forward_sender_name?: string;
-
-    /**
-     * Optional. For forwarded messages, date the original message was sent in Unix time
-     */
-    forward_date?: number;
-
-    /**
      * Optional. For replies, the original message. Note that the Message object in this field will not contain further
      * reply_to_message fields even if it itself is a reply.
      */
@@ -93,178 +62,315 @@ export default interface Message {
      * Optional. Signature of the post author for messages in channels
      */
     author_signature?: string;
+}
 
+interface ForwardDate {
     /**
-     * Optional. For text messages, the actual UTF-8 text of the message, 0-4096 characters.
+     * For forwarded messages, date the original message was sent in Unix time
      */
-    text?: string;
+    forward_date: number;
+}
 
+type ForwardFrom = ForwardFromUser | ForwardFromAnonymous | ForwardFromChannel;
+
+interface ForwardFromUser {
     /**
-     * Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+     * Optional. For forwarded messages, sender of the original message
      */
-    entities?: MessageEntity[];
+    forward_from: User;
+}
 
+interface ForwardFromChannel {
     /**
-     * Optional. For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the
-     * caption
+     * For messages forwarded from channels, information about the original channel
      */
-    caption_entities?: MessageEntity[];
+    forward_from_chat: Chat;
 
     /**
-     * Optional. Message is an audio file, information about the file
+     * For messages forwarded from channels, identifier of the original message in the channel
      */
-    audio?: Audio;
+    forward_from_message_id: number;
 
     /**
-     * Optional. Message is a general file, information about the file
+     * For messages forwarded from channels, signature of the post author if present
      */
-    document?: Document;
+    forward_signature: string;
+}
+
+interface ForwardFromAnonymous {
+    /**
+     * Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
+     */
+    forward_sender_name: string;
+}
+
+interface Captionable {
+    /**
+     * Caption for the animation, audio, document, photo, video or voice, 0-1024 characters
+     */
+    caption: string;
 
     /**
-     * Optional. Message is an animation, information about the animation. For backward compatibility, when this field is
+     * For messages with a caption, special entities like usernames, URLs, bot commands, etc. that appear in the caption
+     */
+    caption_entities: MessageEntity[];
+}
+
+interface TextMessage extends Message {
+    /**
+     * For text messages, the actual UTF-8 text of the message, 0-4096 characters.
+     */
+    text: string;
+
+    /**
+     * For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
+     */
+    entities: MessageEntity[];
+}
+
+interface AudioMessage extends Message, Captionable {
+    /**
+     * Message is an audio file, information about the file
+     */
+    audio: Audio;
+}
+
+interface DocumentMessage extends Message, Captionable {
+    /**
+     * Message is a general file, information about the file
+     */
+    document: Document;
+}
+
+interface AnimationMessage extends Message {
+    /**
+     * Message is an animation, information about the animation. For backward compatibility, when this field is
      * set, the document field will also be set
      */
-    animation?: Animation;
+    animation: Animation;
+}
 
+interface GameMessage extends Message {
     /**
-     * Optional. Message is a game, information about the game. More about games »
+     * Message is a game, information about the game. More about games »
      */
-    game?: Game;
+    game: Game;
+}
 
+interface PhotoMessage extends Message, Captionable {
     /**
-     * Optional. Message is a photo, available sizes of the photo
+     * Message is a photo, available sizes of the photo
      */
-    photo?: PhotoSize[];
+    photo: PhotoSize[];
+}
 
+interface StickerMessage extends Message {
     /**
-     * Optional. Message is a sticker, information about the sticker
+     * Message is a sticker, information about the sticker
      */
-    sticker?: Sticker;
+    sticker: Sticker;
+}
 
+interface VideoMessage extends Message, Captionable {
     /**
-     * Optional. Message is a video, information about the video
+     * Message is a video, information about the video
      */
-    video?: Video;
+    video: Video;
+}
 
+interface VoiceMessage extends Message {
     /**
-     * Optional. Message is a voice message, information about the file
+     * Message is a voice message, information about the file
      */
-    voice?: Voice;
+    voice: Voice;
+}
 
+interface VideoNoteMessage extends Message {
     /**
-     * Optional. Message is a video note, information about the video message
+     * Message is a video note, information about the video message
      */
-    video_note?: VideoNote;
+    video_note: VideoNote;
+}
 
+interface ContactMessage extends Message {
     /**
-     * Optional. Caption for the animation, audio, document, photo, video or voice, 0-1024 characters
+     * Message is a shared contact, information about the contact
      */
-    caption?: string;
+    contact: Contact;
+}
 
+interface LocationMessage extends Message {
     /**
-     * Optional. Message is a shared contact, information about the contact
+     * Message is a shared location, information about the location
      */
-    contact?: Contact;
+    location: Location;
+}
 
+interface VenueMessage extends Message {
     /**
-     * Optional. Message is a shared location, information about the location
+     * Message is a venue, information about the venue
      */
-    location?: Location;
+    venue: Venue;
+}
 
+interface PollMessage extends Message {
     /**
-     * Optional. Message is a venue, information about the venue
+     * Message is a native poll, information about the poll
      */
-    venue?: Venue;
+    poll: Poll;
+}
 
+interface NewChatMembers extends Message {
     /**
-     * Optional. Message is a native poll, information about the poll
-     */
-    poll?: Poll;
-
-    /**
-     * Optional. New members that were added to the group or supergroup and information about them (the bot itself may be
+     * New members that were added to the group or supergroup and information about them (the bot itself may be
      * one of these members)
      */
-    new_chat_members?: User[];
+    new_chat_members: User[];
+}
 
+interface LeftChatMember extends Message {
     /**
-     * Optional. A member was removed from the group, information about them (this member may be the bot itself)
+     * A member was removed from the group, information about them (this member may be the bot itself)
      */
-    left_chat_member?: User;
+    left_chat_member: User;
+}
 
+interface NewChatTitle extends Message {
     /**
-     * Optional. A chat title was changed to this value
+     * A chat title was changed to this value
      */
-    new_chat_title?: string;
+    new_chat_title: string;
+}
 
+interface NewChatPhoto extends Message {
     /**
-     * Optional. A chat photo was change to this value
+     * A chat photo was change to this value
      */
-    new_chat_photo?: PhotoSize[];
+    new_chat_photo: PhotoSize[];
+}
 
+interface DeleteChatPhoto extends Message {
     /**
-     * Optional. Service message: the chat photo was deleted
+     * Service message: the chat photo was deleted
      */
-    delete_chat_photo?: true;
+    delete_chat_photo: true;
+}
 
+interface GroupChatCreated extends Message {
     /**
-     * Optional. Service message: the group has been created
+     * Service message: the group has been created
      */
-    group_chat_created?: true;
+    group_chat_created: true;
+}
 
+interface SupergroupChatCreated extends Message {
     /**
-     * Optional. Service message: the supergroup has been created. This field can‘t be received in a message coming
+     * Service message: the supergroup has been created. This field can‘t be received in a message coming
      * through updates, because bot can’t be a member of a supergroup when it is created. It can only be found in reply_to
      * message if someone replies to a very first message in a directly created supergroup.
      */
-    supergroup_chat_created?: true;
+    supergroup_chat_created: true;
+}
 
+interface ChannelChatCreated extends Message {
     /**
-     * Optional. Service message: the channel has been created. This field can‘t be received in a message coming through
+     * Service message: the channel has been created. This field can‘t be received in a message coming through
      * updates, because bot can’t be a member of a channel when it is created. It can only be found in reply_to_message if
      * someone replies to a very first message in a channel.
      */
-    channel_chat_created?: true;
+    channel_chat_created: true;
+}
 
+interface MigrateToChatId extends Message {
     /**
-     * Optional. The group has been migrated to a supergroup with the specified identifier. This number may be greater
+     * The group has been migrated to a supergroup with the specified identifier. This number may be greater
      * than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is
      * smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this
      * identifier.
      */
-    migrate_to_chat_id?: number;
+    migrate_to_chat_id: number;
+}
 
+interface MigrateFromChatId extends Message {
     /**
-     * Optional. The supergroup has been migrated from a group with the specified identifier. This number may be greater
+     * The supergroup has been migrated from a group with the specified identifier. This number may be greater
      * than 32 bits and some programming languages may have difficulty/silent defects in interpreting it. But it is
      * smaller than 52 bits, so a signed 64 bit integer or double-precision float type are safe for storing this
      * identifier.
      */
-    migrate_from_chat_id?: number;
+    migrate_from_chat_id: number;
+}
 
+interface PinnedMessage extends Message {
     /**
-     * Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply
+     * Specified message was pinned. Note that the Message object in this field will not contain further reply
      * to_message fields even if it is itself a reply.
      */
-    pinned_message?: Message;
-
-    /**
-     * Optional. Message is an invoice for a payment, information about the invoice.
-     */
-    invoice?: Invoice;
-
-    /**
-     * Optional. Message is a service message about a successful payment, information about the payment.
-     */
-    successful_payment?: SuccessfulPayment;
-
-    /**
-     * Optional. The domain name of the website on which the user has logged in.
-     */
-    connected_website?: string;
-
-    /**
-     * Optional. Telegram Passport data
-     */
-    passport_data?: PassportData;
+    pinned_message: Message;
 }
+
+interface InvoiceMessage extends Message {
+    /**
+     * Message is an invoice for a payment, information about the invoice.
+     */
+    invoice: Invoice;
+}
+
+interface SuccessfulPaymentMessage extends Message {
+    /**
+     * Message is a service message about a successful payment, information about the payment.
+     */
+    successful_payment: SuccessfulPayment;
+}
+
+interface ConnectedWebsiteMessage extends Message {
+    /**
+     * The domain name of the website on which the user has logged in.
+     */
+    connected_website: string;
+}
+
+interface PassportDataMessage extends Message {
+    /**
+     * Telegram Passport data
+     */
+    passport_data: PassportData;
+}
+
+type ForwardedMessage = (ForwardDate & ForwardFrom) | {};
+type ContentfulMessage =
+    | AnimationMessage
+    | AudioMessage
+    | DocumentMessage
+    | GameMessage
+    | TextMessage
+    | PhotoMessage
+    | StickerMessage
+    | VideoMessage
+    | VoiceMessage
+    | VideoNoteMessage
+    | ContactMessage
+    | LocationMessage
+    | VenueMessage
+    | PollMessage;
+
+type ServiceMessage =
+    | NewChatMembers
+    | LeftChatMember
+    | NewChatTitle
+    | NewChatPhoto
+    | DeleteChatPhoto
+    | GroupChatCreated
+    | SupergroupChatCreated
+    | ChannelChatCreated
+    | MigrateToChatId
+    | MigrateFromChatId
+    | PinnedMessage
+    | InvoiceMessage
+    | SuccessfulPaymentMessage
+    | ConnectedWebsiteMessage
+    | PassportDataMessage;
+
+type TelegramMessage = ContentfulMessage & ForwardedMessage | ServiceMessage;
+
+export default TelegramMessage;

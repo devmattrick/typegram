@@ -28,7 +28,7 @@ export default interface User {
     username?: string;
 
     /**
-     * Optional. IETF language tag of the user&#x27;s language
+     * Optional. IETF language tag of the user's language
      */
     language_code?: string;
 }

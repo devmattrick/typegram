@@ -9,7 +9,7 @@ export default interface InputTextMessageContent {
 
     /**
      * Optional. Send Markdown or HTML, if you want Telegram apps to show bold, italic, fixed-width text or inline URLs in
-     * your bot&#x27;s message.
+     * your bot's message.
      */
     parse_mode?: string;
 

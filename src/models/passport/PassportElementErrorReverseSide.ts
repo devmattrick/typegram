@@ -1,6 +1,7 @@
 /**
  * Represents an issue with the reverse side of a document. The error is considered resolved when the file with reverse
  * side of the document changes.
+ * TODO: strengthen types
  */
 export default interface PassportElementErrorReverseSide {
     /**
@@ -9,7 +10,7 @@ export default interface PassportElementErrorReverseSide {
     source: string;
 
     /**
-     * The section of the user&#x27;s Telegram Passport which has the issue, one of “driver_license”, “identity_card”
+     * The section of the user's Telegram Passport which has the issue, one of “driver_license”, “identity_card”
      */
     type: 'driver_license' | 'identity_card';
 

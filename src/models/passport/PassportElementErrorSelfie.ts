@@ -1,6 +1,7 @@
 /**
  * Represents an issue with the selfie with a document. The error is considered resolved when the file with the selfie
  * changes.
+ * TODO: strengthen types
  */
 export default interface PassportElementErrorSelfie {
     /**
@@ -9,7 +10,7 @@ export default interface PassportElementErrorSelfie {
     source: string;
 
     /*
-   * The section of the user&#x27;s Telegram Passport which has the issue, one of “passport”, “driver_license”,
+   * The section of the user's Telegram Passport which has the issue, one of “passport”, “driver_license”,
    “identity_card”, “internal_passport”
    */
     type: 'passport' | 'driver_license' | 'identity_card' | 'internal_passport';

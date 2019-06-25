@@ -17,17 +17,17 @@ export default interface InlineQueryResultContact {
     id: string;
 
     /**
-     * Contact&#x27;s phone number
+     * Contact's phone number
      */
     phone_number: string;
 
     /**
-     * Contact&#x27;s first name
+     * Contact's first name
      */
     first_name: string;
 
     /**
-     * Optional. Contact&#x27;s last name
+     * Optional. Contact's last name
      */
     last_name?: string;
 

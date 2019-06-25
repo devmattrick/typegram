@@ -8,7 +8,7 @@ export default interface PassportElementErrorUnspecified {
     source: string;
 
     /**
-     * Type of element of the user&#x27;s Telegram Passport which has the issue
+     * Type of element of the user's Telegram Passport which has the issue
      */
     type: string;
 

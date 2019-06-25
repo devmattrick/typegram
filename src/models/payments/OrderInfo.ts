@@ -10,7 +10,7 @@ export default interface OrderInfo {
     name?: string;
 
     /**
-     * Optional. User&#x27;s phone number
+     * Optional. User's phone number
      */
     phone_number?: string;
 

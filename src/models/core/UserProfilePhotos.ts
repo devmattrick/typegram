@@ -1,7 +1,7 @@
 import PhotoSize from './PhotoSize';
 
 /**
- * This object represent a user&#x27;s profile pictures.
+ * This object represent a user's profile pictures.
  */
 export default interface UserProfilePhotos {
     /**

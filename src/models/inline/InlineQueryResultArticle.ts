@@ -36,7 +36,7 @@ export default interface InlineQueryResultArticle {
     url?: string;
 
     /**
-     * Optional. Pass true, if you don&#x27;t want the URL to be shown in the message
+     * Optional. Pass true, if you don't want the URL to be shown in the message
      */
     hide_url?: boolean;
 
