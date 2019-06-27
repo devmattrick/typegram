@@ -1,11 +1,11 @@
-import { Decoder } from '@mojotech/json-type-validation';
+import * as JT from '@mojotech/json-type-validation';
 
 import ChosenInlineResult from '../inline/ChosenInlineResult';
 import InlineQuery from '../inline/InlineQuery';
 import PreCheckoutQuery from '../payments/PreCheckoutQuery';
 import ShippingQuery from '../payments/ShippingQuery';
 import CallbackQuery from './CallbackQuery';
-import Message from './Message';
+import Message, { MessageDecoder } from './Message';
 import Poll from './Poll';
 
 interface Update {
@@ -24,6 +24,11 @@ interface MessageUpdate extends Update {
      */
     readonly message: Message;
 }
+
+const MessageUpdateDecoder: JT.Decoder<MessageUpdate> = JT.object({
+    update_id: JT.number(),
+    message: MessageDecoder,
+});
 
 interface EditedMessageUpdate extends Update {
     /**

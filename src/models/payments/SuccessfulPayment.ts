@@ -1,4 +1,5 @@
-import OrderInfo from './OrderInfo';
+import * as JT from '@mojotech/json-type-validation';
+import OrderInfo, { OrderInfoDecoder } from './OrderInfo';
 
 /**
  * This object contains basic information about a successful payment.
@@ -41,3 +42,15 @@ export default interface SuccessfulPayment {
      */
     provider_payment_charge_id: string;
 }
+
+export const SuccessfulPaymentDecoder: JT.Decoder<
+    SuccessfulPayment
+> = JT.object({
+    currency: JT.string(),
+    total_amount: JT.number(),
+    invoice_payload: JT.string(),
+    shipping_option_id: JT.optional(JT.string()),
+    order_info: JT.optional(OrderInfoDecoder),
+    telegram_payment_charge_id: JT.string(),
+    provider_payment_charge_id: JT.string(),
+});

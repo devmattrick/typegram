@@ -1,4 +1,6 @@
-import PhotoSize from './PhotoSize';
+import * as JT from '@mojotech/json-type-validation';
+
+import PhotoSize, { PhotoSizeDecoder } from './PhotoSize';
 
 /**
  * This object represents a video message (available in Telegram apps as of v.4.0).
@@ -29,3 +31,11 @@ export default interface VideoNote {
      */
     file_size?: number;
 }
+
+export const VideoNoteDecoder: JT.Decoder<VideoNote> = JT.object({
+    file_id: JT.string(),
+    length: JT.number(),
+    duration: JT.number(),
+    thumb: JT.optional(PhotoSizeDecoder),
+    file_size: JT.optional(JT.number()),
+});

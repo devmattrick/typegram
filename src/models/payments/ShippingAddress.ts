@@ -1,3 +1,5 @@
+import * as JT from '@mojotech/json-type-validation';
+
 /**
  * This object represents a shipping address.
  */
@@ -32,3 +34,12 @@ export default interface ShippingAddress {
      */
     post_code: string;
 }
+
+export const ShippingAddressDecoder: JT.Decoder<ShippingAddress> = JT.object({
+    country_code: JT.string(),
+    state: JT.string(),
+    city: JT.string(),
+    street_line1: JT.string(),
+    street_line2: JT.string(),
+    post_code: JT.string(),
+});

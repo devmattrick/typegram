@@ -1,4 +1,6 @@
-import ShippingAddress from './ShippingAddress';
+import * as JT from '@mojotech/json-type-validation';
+
+import ShippingAddress, { ShippingAddressDecoder } from './ShippingAddress';
 
 /**
  * This object represents information about an order.
@@ -24,3 +26,10 @@ export default interface OrderInfo {
      */
     shipping_address?: ShippingAddress;
 }
+
+export const OrderInfoDecoder: JT.Decoder<OrderInfo> = JT.object({
+    name: JT.optional(JT.string()),
+    phone_number: JT.optional(JT.string()),
+    email: JT.optional(JT.string()),
+    shipping_address: JT.optional(ShippingAddressDecoder),
+});

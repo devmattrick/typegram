@@ -1,3 +1,5 @@
+import * as JT from '@mojotech/json-type-validation';
+
 /**
  * This object contains basic information about an invoice.
  */
@@ -29,3 +31,11 @@ export default interface Invoice {
      */
     total_amount: number;
 }
+
+export const InvoiceDecoder: JT.Decoder<Invoice> = JT.object({
+    title: JT.string(),
+    description: JT.string(),
+    start_parameter: JT.string(),
+    currency: JT.string(),
+    total_amount: JT.number(),
+});

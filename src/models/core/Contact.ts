@@ -1,3 +1,5 @@
+import * as JT from '@mojotech/json-type-validation';
+
 /**
  * This object represents a phone contact.
  */
@@ -27,3 +29,11 @@ export default interface Contact {
      */
     vcard?: string;
 }
+
+export const ContactDecoder: JT.Decoder<Contact> = JT.object({
+    phone_number: JT.string(),
+    first_name: JT.string(),
+    last_name: JT.optional(JT.string()),
+    user_id: JT.optional(JT.number()),
+    vcard: JT.optional(JT.string()),
+});

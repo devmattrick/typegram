@@ -18,7 +18,8 @@
         "comma-dangle": ["error", "always-multiline"],
         "no-undef": "off",
         "import/prefer-default-export": "off",
-        "@typescript-eslint/explicit-function-return-type": "off"
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/camelcase": "off"
     },
     "settings": {
         "import/resolver": {

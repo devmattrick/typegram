@@ -1,3 +1,5 @@
+import * as JT from '@mojotech/json-type-validation';
+
 /**
  * This object represents one size of a photo or a file / sticker thumbnail.
  */
@@ -22,3 +24,10 @@ export default interface PhotoSize {
      */
     file_size?: number;
 }
+
+export const PhotoSizeDecoder: JT.Decoder<PhotoSize> = JT.object({
+    file_id: JT.string(),
+    width: JT.number(),
+    height: JT.number(),
+    file_size: JT.optional(JT.number()),
+});

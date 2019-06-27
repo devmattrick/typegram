@@ -1,4 +1,6 @@
-import PollOption from './PollOption';
+import * as JT from '@mojotech/json-type-validation';
+
+import PollOption, { PollOptionDecoder } from './PollOption';
 
 /**
  * This object contains information about a poll.
@@ -24,3 +26,10 @@ export default interface Poll {
      */
     is_closed: boolean;
 }
+
+export const PollDecoder: JT.Decoder<Poll> = JT.object({
+    id: JT.string(),
+    question: JT.string(),
+    options: JT.array(PollOptionDecoder),
+    is_closed: JT.boolean(),
+});

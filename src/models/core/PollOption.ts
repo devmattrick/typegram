@@ -1,3 +1,5 @@
+import * as JT from '@mojotech/json-type-validation';
+
 /**
  * This object contains information about one answer option in a poll.
  */
@@ -12,3 +14,8 @@ export default interface PollOption {
      */
     voter_count: number;
 }
+
+export const PollOptionDecoder: JT.Decoder<PollOption> = JT.object({
+    text: JT.string(),
+    voter_count: JT.number(),
+});

@@ -1,4 +1,6 @@
-import PhotoSize from './PhotoSize';
+import * as JT from '@mojotech/json-type-validation';
+
+import PhotoSize, { PhotoSizeDecoder } from './PhotoSize';
 
 /**
  * This object represents a video file.
@@ -39,3 +41,13 @@ export default interface Video {
      */
     file_size?: number;
 }
+
+export const VideoDecoder: JT.Decoder<Video> = JT.object({
+    file_id: JT.string(),
+    width: JT.number(),
+    height: JT.number(),
+    duration: JT.number(),
+    thumb: JT.optional(PhotoSizeDecoder),
+    mime_type: JT.optional(JT.string()),
+    file_size: JT.optional(JT.number()),
+});

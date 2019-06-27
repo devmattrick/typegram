@@ -1,3 +1,5 @@
+import * as JT from '@mojotech/json-type-validation';
+
 /**
  * This object describes the position on faces where a mask should be placed by default.
  */
@@ -24,3 +26,10 @@ export default interface MaskPosition {
      */
     scale: number;
 }
+
+export const MaskPositionDecoder: JT.Decoder<MaskPosition> = JT.object({
+    point: JT.string(),
+    x_shift: JT.number(),
+    y_shift: JT.number(),
+    scale: JT.number(),
+});

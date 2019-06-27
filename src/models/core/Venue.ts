@@ -1,4 +1,6 @@
-import Location from './Location';
+import * as JT from '@mojotech/json-type-validation';
+
+import Location, { LocationDecoder } from './Location';
 
 /**
  * This object represents a venue.
@@ -30,3 +32,11 @@ export default interface Venue {
      */
     foursquare_type?: string;
 }
+
+export const VenueDecoder: JT.Decoder<Venue> = JT.object({
+    location: LocationDecoder,
+    title: JT.string(),
+    address: JT.string(),
+    foursquare_id: JT.optional(JT.string()),
+    foursquare_type: JT.optional(JT.string()),
+});

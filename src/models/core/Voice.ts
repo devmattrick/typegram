@@ -1,3 +1,5 @@
+import * as JT from '@mojotech/json-type-validation';
+
 /**
  * This object represents a voice note.
  */
@@ -22,3 +24,10 @@ export default interface Voice {
      */
     file_size?: number;
 }
+
+export const VoiceDecoder: JT.Decoder<Voice> = JT.object({
+    file_id: JT.string(),
+    duration: JT.number(),
+    mime_type: JT.optional(JT.string()),
+    file_size: JT.optional(JT.number()),
+});
