@@ -1,11 +1,28 @@
 import { EventEmitter } from 'events';
 
-export type ParamType = string | number | boolean | null | undefined;
+type BaseParamType = string | number | boolean | null | undefined;
+export type ParamType = BaseParamType | BaseParamType[];
 export type Params = Record<string, ParamType>;
+
+export type TelegramResponse<T> =
+    | {
+          ok: true;
+          description?: string;
+          result: T;
+      }
+    | {
+          ok: false;
+          description: string;
+          error_code: number;
+          parameters?: {
+              migrate_to_chat_id: number;
+              retry_after: number;
+          };
+      };
 
 export interface Bot {
     eventEmitter: EventEmitter;
-    execute: <T>(method: string, params: Params) => Promise<T>;
+    execute: <T>(config: { method: string; params: Params }) => Promise<T>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

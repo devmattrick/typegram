@@ -6,7 +6,7 @@ import PreCheckoutQuery from '../payments/PreCheckoutQuery';
 import ShippingQuery from '../payments/ShippingQuery';
 import CallbackQuery from './CallbackQuery';
 import Message, { MessageDecoder } from './Message';
-import Poll from './Poll';
+import Poll, { PollDecoder } from './Poll';
 
 interface Update {
     /**
@@ -18,6 +18,10 @@ interface Update {
     readonly update_id: number;
 }
 
+const BaseMessageUpdateDecoder: JT.Decoder<Update> = JT.object({
+    update_id: JT.number(),
+});
+
 interface MessageUpdate extends Update {
     /**
      * New incoming message of any kind — text, photo, sticker, etc.
@@ -25,10 +29,12 @@ interface MessageUpdate extends Update {
     readonly message: Message;
 }
 
-const MessageUpdateDecoder: JT.Decoder<MessageUpdate> = JT.object({
-    update_id: JT.number(),
-    message: MessageDecoder,
-});
+const MessageUpdateDecoder: JT.Decoder<MessageUpdate> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        message: MessageDecoder,
+    })
+);
 
 interface EditedMessageUpdate extends Update {
     /**
@@ -37,6 +43,15 @@ interface EditedMessageUpdate extends Update {
     readonly edited_message: Message;
 }
 
+const EditedMessageUpdateDecoder: JT.Decoder<
+    EditedMessageUpdate
+> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        edited_message: MessageDecoder,
+    })
+);
+
 interface ChannelPostUpdate extends Update {
     /**
      * New incoming channel post of any kind — text, photo, sticker, etc.
@@ -44,12 +59,28 @@ interface ChannelPostUpdate extends Update {
     readonly channel_post: Message;
 }
 
+const ChannelPostUpdateDecoder: JT.Decoder<ChannelPostUpdate> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        channel_post: MessageDecoder,
+    })
+);
+
 interface EditedChannelPostUpdate extends Update {
     /**
      * New version of a channel post that is known to the bot and was edited
      */
     readonly edited_channel_post: Message;
 }
+
+const EditedChannelPostUpdateDecoder: JT.Decoder<
+    EditedChannelPostUpdate
+> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        edited_channel_post: MessageDecoder,
+    })
+);
 
 interface InlineQueryUpdate extends Update {
     /**
@@ -94,6 +125,13 @@ interface PollUpdate extends Update {
     readonly poll: Poll;
 }
 
+const PollUpdateDecoder: JT.Decoder<PollUpdate> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        poll: PollDecoder,
+    })
+);
+
 /**
  * This object represents an incoming update.
  */
@@ -110,3 +148,16 @@ type TelegramUpdate =
     | PollUpdate;
 
 export default TelegramUpdate;
+
+export const UpdateDecoder = JT.union(
+    MessageUpdateDecoder,
+    EditedMessageUpdateDecoder,
+    ChannelPostUpdateDecoder,
+    EditedChannelPostUpdateDecoder,
+    // InlineQueryUpdateDecoder,
+    // ChosenInlineResultUpdateDecoder,
+    // CallbackQueryUpdateDecoder,
+    // ShippingQueryUpdateDecoder,
+    // PreCheckoutQueryUpdateDecoder,
+    PollUpdateDecoder
+);

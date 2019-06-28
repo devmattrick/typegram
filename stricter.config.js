@@ -15,9 +15,13 @@ module.exports = {
                 client: {
                     'bot.ts': { type: 'file' },
                     'index.ts': { type: 'file' },
-                    'polling.ts': { type: 'file' },
+                    method: { type: 'dir', rule: 'client/method' },
+                    'poller.ts': { type: 'file' },
                     'types.ts': { type: 'file' },
                     'util.ts': { type: 'file' },
+                },
+                'client/method': {
+                    '*.ts': { type: 'file' },
                 },
                 models: {
                     '*': { type: 'dir', rule: 'models/model' },

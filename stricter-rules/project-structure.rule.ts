@@ -69,7 +69,7 @@ const checkFolderRule = (
         return { errors: [`${key}: invalid value, must be an object`] };
     }
 
-    const rule = {};
+    const rule: FolderRule = {};
     const errors: string[] = [];
 
     Object.keys(obj).forEach(k => {
@@ -89,6 +89,10 @@ export const onProject = ({
     rootPath,
     files,
 }: OnProjectArgument): string[] => {
+    if (!config) {
+        return ['You need to set up the project structure config.'];
+    }
+
     if (!('*' in config)) {
         return ["You must define the root folder using '*'."];
     }
@@ -98,7 +102,7 @@ export const onProject = ({
         return root.errors;
     }
 
-    const errors = [];
+    const errors: string[] = [];
     const toProcess: { path: string; rule: FolderRule }[] = [
         { path: rootPath, rule: root.rule },
     ];
@@ -106,6 +110,8 @@ export const onProject = ({
 
     while (toProcess.length > 0) {
         const next = toProcess.shift();
+        // eslint-disable-next-line no-continue
+        if (!next) continue;
 
         Object.entries(next.rule).forEach(([entry, cfg]) => {
             let filesToProcess = [];

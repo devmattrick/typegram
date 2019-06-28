@@ -172,14 +172,14 @@ interface TextMessage extends Message {
     /**
      * For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
      */
-    entities: MessageEntity[];
+    entities?: MessageEntity[];
 }
 
 const TextMessageDecoder: JT.Decoder<TextMessage> = JT.intersection(
     BaseMessageDecoder,
     JT.object({
         text: JT.string(),
-        entities: JT.array(MessageEntityDecoder),
+        entities: JT.optional(JT.array(MessageEntityDecoder)),
     })
 );
 
