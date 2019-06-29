@@ -1,4 +1,5 @@
-import { EventEmitter } from 'events';
+import Message from '../models/core/Message';
+import Update from '../models/core/Update';
 
 type BaseParamType = string | number | boolean | null | undefined;
 export type ParamType = BaseParamType | BaseParamType[];
@@ -21,7 +22,12 @@ export type TelegramResponse<T> =
       };
 
 export interface Bot {
-    eventEmitter: EventEmitter;
+    on(type: 'error', callback: (error: Error) => void): void;
+    on(type: 'update', callback: (update: Update) => void): void;
+    on(type: 'message', callback: (message: Message) => void): void;
+    emit(type: 'error', error: Error): void;
+    emit(type: 'update', update: Update): void;
+    emit(type: 'message', message: Message): void;
     execute: <T>(config: { method: string; params: Params }) => Promise<T>;
 }
 

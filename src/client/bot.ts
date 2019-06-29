@@ -11,7 +11,7 @@ export class TelegramBot implements Bot {
 
     private readonly axios: AxiosInstance;
 
-    public readonly eventEmitter: EventEmitter;
+    private readonly eventEmitter: EventEmitter;
 
     private readonly poller: Poller;
 
@@ -31,6 +31,16 @@ export class TelegramBot implements Bot {
     public readonly start = () => {
         this.poller.start();
     };
+
+    public readonly on: Bot['on'] = (
+        type: string,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        callback: (arg0: any) => void
+    ) => this.eventEmitter.on(type, callback);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public readonly emit: Bot['emit'] = (type: string, value: any) =>
+        this.eventEmitter.emit(type, value);
 
     public readonly execute = async <T>(config: {
         method: string;
