@@ -1,3 +1,4 @@
+import { DecoderError, Result } from '@mojotech/json-type-validation';
 import Message from '../models/core/Message';
 import Update from '../models/core/Update';
 
@@ -5,11 +6,12 @@ type BaseParamType = string | number | boolean | null | undefined;
 export type ParamType = BaseParamType | BaseParamType[];
 export type Params = Record<string, ParamType>;
 
-export type TelegramResponse<T> =
+export type TelegramResponse =
     | {
           ok: true;
           description?: string;
-          result: T;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          result: any;
       }
     | {
           ok: false;
@@ -21,14 +23,29 @@ export type TelegramResponse<T> =
           };
       };
 
+export interface Method<M extends string, P extends Params, T> {
+    method: M;
+    params: P;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    parse: (arg0: any) => Result.Result<T, DecoderError>;
+}
+
+export interface BotError {
+    type: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    error: any;
+}
+
 export interface Bot {
-    on(type: 'error', callback: (error: Error) => void): void;
+    on(type: 'error', callback: (error: BotError) => void): void;
     on(type: 'update', callback: (update: Update) => void): void;
     on(type: 'message', callback: (message: Message) => void): void;
-    emit(type: 'error', error: Error): void;
+    emit(type: 'error', error: BotError): void;
     emit(type: 'update', update: Update): void;
     emit(type: 'message', message: Message): void;
-    execute: <T>(config: { method: string; params: Params }) => Promise<T>;
+    execute: <M extends string, P extends Params, T>(
+        method: Method<M, P, T>
+    ) => Promise<T>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

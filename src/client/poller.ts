@@ -16,8 +16,13 @@ export class Poller {
     }
 
     public readonly start = () => {
-        const runPoller = (): NodeJS.Timeout =>
-            setTimeout(() => this.poll().then(runPoller), 1000);
+        const runPoller = (): Promise<void> =>
+            new Promise((resolve, reject) => {
+                this.poll()
+                    .then(resolve, reject)
+                    .catch(reject)
+                    .then(runPoller);
+            });
         runPoller();
     };
 
@@ -28,16 +33,16 @@ export class Poller {
                 offset: this.currentOffset,
                 timeout: 30,
             },
+            parse: result => UpdatesDecoder.run(result),
         };
 
-        try {
-            const result = await this.bot.execute(getUpdates);
+        const updates = await this.bot.execute(getUpdates);
+        updates.forEach(update => this.bot.emit('update', update));
 
-            UpdatesDecoder.runWithException(result).forEach(update =>
-                this.bot.emit('update', update)
-            );
-        } catch (err) {
-            this.bot.emit('error', err);
-        }
+        this.currentOffset = updates.reduce(
+            (prev, curr) =>
+                !prev || prev <= curr.update_id ? curr.update_id + 1 : prev,
+            this.currentOffset
+        );
     };
 }

@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import * as qs from 'qs';
 
 import { Poller } from './poller';
-import { Bot, BotModule, Params, TelegramResponse } from './types';
+import { Bot, BotModule, Params, TelegramResponse, Method } from './types';
 import { getBaseUrl } from './util';
 
 export class TelegramBot implements Bot {
@@ -42,19 +42,26 @@ export class TelegramBot implements Bot {
     public readonly emit: Bot['emit'] = (type: string, value: any) =>
         this.eventEmitter.emit(type, value);
 
-    public readonly execute = async <T>(config: {
-        method: string;
-        params: Params;
-    }): Promise<T> => {
-        const queryString = qs.stringify(config.params, { skipNulls: true });
-        const { data } = await this.axios.get<TelegramResponse<T>>(
-            `/${config.method}?${queryString}`
+    public readonly execute = async <M extends string, P extends Params, T>(
+        method: Method<M, P, T>
+    ): Promise<T> => {
+        const queryString = qs.stringify(method.params, { skipNulls: true });
+        const { data } = await this.axios.get<TelegramResponse>(
+            `/${method.method}?${queryString}`
         );
 
         if (!data.ok) {
+            this.emit('error', { type: 'telegram', error: data });
             throw new Error(`ERROR #${data.error_code}: ${data.description}`);
         }
 
-        return data.result;
+        const result = method.parse(data.result);
+
+        if (result.ok) {
+            return result.result;
+        }
+
+        this.emit('error', { type: 'json-decode', error: result.error });
+        throw new Error(`Error while parsing JSON: ${result.error}`);
     };
 }

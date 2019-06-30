@@ -12,5 +12,6 @@ if (!apiToken) {
 } else {
     const bot = new TelegramBot(apiToken);
     bot.on('update', update => console.log(JSON.stringify(update)));
+    bot.on('error', error => console.error(error));
     bot.start();
 }
