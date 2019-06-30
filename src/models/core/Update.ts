@@ -1,10 +1,14 @@
 import * as JT from '@mojotech/json-type-validation';
 
-import ChosenInlineResult from '../inline/ChosenInlineResult';
-import InlineQuery from '../inline/InlineQuery';
-import PreCheckoutQuery from '../payments/PreCheckoutQuery';
-import ShippingQuery from '../payments/ShippingQuery';
-import CallbackQuery from './CallbackQuery';
+import ChosenInlineResult, {
+    ChosenInlineResultDecoder,
+} from '../inline/ChosenInlineResult';
+import InlineQuery, { InlineQueryDecoder } from '../inline/InlineQuery';
+import PreCheckoutQuery, {
+    PreCheckoutQueryDecoder,
+} from '../payments/PreCheckoutQuery';
+import ShippingQuery, { ShippingQueryDecoder } from '../payments/ShippingQuery';
+import CallbackQuery, { CallbackQueryDecoder } from './CallbackQuery';
 import Message, { MessageDecoder } from './Message';
 import Poll, { PollDecoder } from './Poll';
 
@@ -89,6 +93,13 @@ interface InlineQueryUpdate extends Update {
     readonly inline_query: InlineQuery;
 }
 
+const InlineQueryUpdateDecoder: JT.Decoder<InlineQueryUpdate> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        inline_query: InlineQueryDecoder,
+    })
+);
+
 interface ChosenInlineResultUpdate extends Update {
     /**
      * The result of an inline query that was chosen by a user and sent to their chat partner. Please see our
@@ -97,12 +108,30 @@ interface ChosenInlineResultUpdate extends Update {
     readonly chosen_inline_result: ChosenInlineResult;
 }
 
+const ChosenInlineResultUpdateDecoder: JT.Decoder<
+    ChosenInlineResultUpdate
+> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        chosen_inline_result: ChosenInlineResultDecoder,
+    })
+);
+
 interface CallbackQueryUpdate extends Update {
     /**
      * New incoming callback query
      */
     readonly callback_query: CallbackQuery;
 }
+
+const CallbackQueryUpdateDecoder: JT.Decoder<
+    CallbackQueryUpdate
+> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        callback_query: CallbackQueryDecoder,
+    })
+);
 
 interface ShippingQueryUpdate extends Update {
     /**
@@ -111,12 +140,30 @@ interface ShippingQueryUpdate extends Update {
     readonly shipping_query: ShippingQuery;
 }
 
+const ShippingQueryUpdateDecoder: JT.Decoder<
+    ShippingQueryUpdate
+> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        shipping_query: ShippingQueryDecoder,
+    })
+);
+
 interface PreCheckoutQueryUpdate extends Update {
     /**
      * New incoming pre-checkout query. Contains full information about checkout
      */
     readonly pre_checkout_query: PreCheckoutQuery;
 }
+
+const PreCheckoutQueryUpdateDecoder: JT.Decoder<
+    PreCheckoutQueryUpdate
+> = JT.intersection(
+    BaseMessageUpdateDecoder,
+    JT.object({
+        pre_checkout_query: PreCheckoutQueryDecoder,
+    })
+);
 
 interface PollUpdate extends Update {
     /**
@@ -154,10 +201,12 @@ export const UpdateDecoder = JT.union(
     EditedMessageUpdateDecoder,
     ChannelPostUpdateDecoder,
     EditedChannelPostUpdateDecoder,
-    // InlineQueryUpdateDecoder,
-    // ChosenInlineResultUpdateDecoder,
-    // CallbackQueryUpdateDecoder,
-    // ShippingQueryUpdateDecoder,
-    // PreCheckoutQueryUpdateDecoder,
-    PollUpdateDecoder
+    InlineQueryUpdateDecoder,
+    ChosenInlineResultUpdateDecoder,
+    CallbackQueryUpdateDecoder,
+    JT.union(
+        ShippingQueryUpdateDecoder,
+        PreCheckoutQueryUpdateDecoder,
+        PollUpdateDecoder
+    )
 );

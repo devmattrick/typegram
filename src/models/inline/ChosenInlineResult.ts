@@ -1,5 +1,7 @@
-import Location from '../core/Location';
-import User from '../core/User';
+import * as JT from '@mojotech/json-type-validation';
+
+import Location, { LocationDecoder } from '../core/Location';
+import User, { UserDecoder } from '../core/User';
 
 /**
  * Represents a result of an inline query that was chosen by the user and sent to their chat partner.
@@ -31,3 +33,13 @@ export default interface ChosenInlineResult {
      */
     query: string;
 }
+
+export const ChosenInlineResultDecoder: JT.Decoder<
+    ChosenInlineResult
+> = JT.object({
+    result_id: JT.string(),
+    from: UserDecoder,
+    location: JT.optional(LocationDecoder),
+    inline_message_id: JT.optional(JT.string()),
+    query: JT.string(),
+});

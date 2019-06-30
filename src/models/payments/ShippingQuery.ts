@@ -1,5 +1,7 @@
-import User from '../core/User';
-import ShippingAddress from './ShippingAddress';
+import * as JT from '@mojotech/json-type-validation';
+
+import User, { UserDecoder } from '../core/User';
+import ShippingAddress, { ShippingAddressDecoder } from './ShippingAddress';
 
 /**
  * This object contains information about an incoming shipping query.
@@ -25,3 +27,10 @@ export default interface ShippingQuery {
      */
     shipping_address: ShippingAddress;
 }
+
+export const ShippingQueryDecoder: JT.Decoder<ShippingQuery> = JT.object({
+    id: JT.string(),
+    from: UserDecoder,
+    invoice_payload: JT.string(),
+    shipping_address: ShippingAddressDecoder,
+});
