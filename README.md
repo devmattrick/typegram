@@ -1,2 +1,3 @@
 # Typegram
-Typegram is a TypeScript Telegram bot API client.
+
+Typegram is a TypeScript Telegram Bot API client.

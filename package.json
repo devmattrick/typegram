@@ -1,7 +1,7 @@
 {
     "name": "typegram",
     "version": "1.0.0",
-    "description": "TypeScript Telegram bot API client.",
+    "description": "TypeScript Telegram Bot API client.",
     "main": "index.js",
     "repository": "https://github.com/devmattrick/typegram.git",
     "author": "Matthew McCune <contact@matthew.cx>",
@@ -9,7 +9,7 @@
     "private": false,
     "husky": {
         "hooks": {
-            "pre-commit": "yarn tsc stricter-rules/*.rule.ts && lint-staged"
+            "pre-commit": "lint-staged"
         }
     },
     "lint-staged": {
@@ -21,10 +21,14 @@
         "*.{md,html,json}": [
             "prettier --write",
             "git add"
-        ],
-        "*": [
-            "stricter"
         ]
+    },
+    "scripts": {
+        "lint": "eslint src/**/*.ts",
+        "lint:fix": "eslint src/**/*.ts --fix",
+        "build": "tsc",
+        "dev": "tsnd src/index.ts",
+        "start": "node src/index.js"
     },
     "dependencies": {
         "@mojotech/json-type-validation": "^3.1.0",
@@ -32,27 +36,20 @@
         "form-data": "^2.3.3",
         "qs": "^6.7.0"
     },
-    "scripts": {
-        "build": "yarn tsc",
-        "start": "node src/index.js"
-    },
     "devDependencies": {
-        "@types/form-data": "^2.2.1",
-        "@types/glob": "^7.1.1",
+        "@types/node": "^12.6.8",
         "@types/qs": "^6.5.3",
         "@typescript-eslint/eslint-plugin": "^1.10.2",
         "@typescript-eslint/parser": "^1.10.2",
         "eslint": "^5.16.0",
-        "eslint-config-airbnb": "^17.1.0",
+        "eslint-config-airbnb-base": "^13.2.0",
         "eslint-config-prettier": "^5.0.0",
         "eslint-plugin-import": "^2.17.3",
         "eslint-plugin-prettier": "^3.1.0",
-        "glob": "^7.1.4",
         "husky": "^2.4.1",
         "lint-staged": "^8.2.1",
         "prettier": "^1.18.2",
-        "stricter": "^0.3.4",
-        "ts-node": "^8.1.0",
+        "ts-node-dev": "^1.0.0-pre.40",
         "typescript": "^3.4.3"
     }
 }
