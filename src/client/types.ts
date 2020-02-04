@@ -22,9 +22,10 @@ export type TelegramResponse =
           };
       };
 
-export interface Method<M extends string, P extends Params> {
+export interface Method<M extends string, P extends Params, T> {
     method: M;
     params: P;
+    __RESULT_TYPE?: undefined & T; // fake type to allow type hints for methods while preventing setting it
 }
 
 export interface BotError {
@@ -41,7 +42,7 @@ export interface Bot {
     emit(type: 'update', update: Update): void;
     emit(type: 'message', message: Message): void;
     execute: <M extends string, P extends Params, T>(
-        method: Method<M, P>
+        method: Method<M, P, T>
     ) => Promise<T>;
 }
 

@@ -57,13 +57,6 @@ export class TelegramBot implements Bot {
             throw new Error(`ERROR #${data.error_code}: ${data.description}`);
         }
 
-        const result = method.parse(data.result);
-
-        if (result.ok) {
-            return result.result;
-        }
-
-        this.emit('error', { type: 'json-decode', error: result.error });
-        throw new Error(`Error while parsing JSON: ${result.error}`);
+        return data.result as T;
     };
 }
