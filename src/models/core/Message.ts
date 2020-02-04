@@ -372,6 +372,6 @@ type ServiceMessage =
     | ConnectedWebsiteMessage
     | PassportDataMessage;
 
-type TelegramMessage = ContentfulMessage & ForwardedMessage | ServiceMessage;
+type TelegramMessage = (ContentfulMessage & ForwardedMessage) | ServiceMessage;
 
 export default TelegramMessage;
