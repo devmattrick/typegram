@@ -1,6 +1,4 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import PhotoSize, { PhotoSizeDecoder } from './PhotoSize';
+import PhotoSize from './PhotoSize';
 
 /**
  * This object represents a general file (as opposed to photos, voice messages and audio files).
@@ -31,11 +29,3 @@ export default interface Document {
      */
     file_size?: number;
 }
-
-export const DocumentDecoder: JT.Decoder<Document> = JT.object({
-    file_id: JT.string(),
-    thumb: JT.optional(PhotoSizeDecoder),
-    file_name: JT.optional(JT.string()),
-    mime_type: JT.optional(JT.string()),
-    file_size: JT.optional(JT.number()),
-});

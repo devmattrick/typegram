@@ -1,5 +1,3 @@
-import * as JT from '@mojotech/json-type-validation';
-
 /**
  * This object represents a chat photo.
  */
@@ -14,8 +12,3 @@ export default interface ChatPhoto {
      */
     big_file_id: string;
 }
-
-export const ChatPhotoDecoder: JT.Decoder<ChatPhoto> = JT.object({
-    small_file_id: JT.string(),
-    big_file_id: JT.string(),
-});

@@ -1,5 +1,3 @@
-import * as JT from '@mojotech/json-type-validation';
-
 /**
  * Maximum file size to download is 20 MB
  *
@@ -23,9 +21,3 @@ export default interface File {
      */
     file_path?: string;
 }
-
-export const FileDecoder: JT.Decoder<File> = JT.object({
-    file_id: JT.string(),
-    file_size: JT.optional(JT.number()),
-    file_path: JT.optional(JT.string()),
-});

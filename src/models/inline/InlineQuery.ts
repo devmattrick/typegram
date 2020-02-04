@@ -1,7 +1,5 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import Location, { LocationDecoder } from '../core/Location';
-import User, { UserDecoder } from '../core/User';
+import Location from '../core/Location';
+import User from '../core/User';
 
 /**
  * This object represents an incoming inline query. When the user sends an empty query, your bot could return some
@@ -33,11 +31,3 @@ export default interface InlineQuery {
      */
     offset: string;
 }
-
-export const InlineQueryDecoder = JT.object({
-    id: JT.string(),
-    from: UserDecoder,
-    location: JT.optional(LocationDecoder),
-    query: JT.string(),
-    offset: JT.string(),
-});

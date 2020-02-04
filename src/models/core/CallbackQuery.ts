@@ -1,7 +1,5 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import Message, { MessageDecoder } from './Message';
-import User, { UserDecoder } from './User';
+import Message from './Message';
+import User from './User';
 
 interface MessagePayload {
     /**
@@ -11,22 +9,12 @@ interface MessagePayload {
     message: Message;
 }
 
-const MessagePayloadDecoder: JT.Decoder<MessagePayload> = JT.object({
-    message: MessageDecoder,
-});
-
 interface InlineMessagePayload {
     /**
      * Identifier of the message sent via the bot in inline mode, that originated the query.
      */
     inline_message_id: string;
 }
-
-const InlineMessagePayloadDecoder: JT.Decoder<InlineMessagePayload> = JT.object(
-    {
-        inline_message_id: JT.string(),
-    }
-);
 
 interface DataPayload {
     /**
@@ -36,22 +24,12 @@ interface DataPayload {
     data: string;
 }
 
-const DataPayloadDecoder: JT.Decoder<DataPayload> = JT.object({
-    data: JT.string(),
-});
-
 interface GameShortNamePayload {
     /**
      * Short name of a Game to be returned, serves as the unique identifier for the game
      */
     game_short_name: string;
 }
-
-const GameShortNamePayloadDecoder: JT.Decoder<GameShortNamePayload> = JT.object(
-    {
-        game_short_name: JT.string(),
-    }
-);
 
 interface CallbackQuery {
     /**
@@ -71,12 +49,6 @@ interface CallbackQuery {
     chat_instance: string;
 }
 
-const BaseCallbackQueryDecoder: JT.Decoder<CallbackQuery> = JT.object({
-    id: JT.string(),
-    from: UserDecoder,
-    chat_instance: JT.string(),
-});
-
 /**
  * This type represents an incoming callback query from a callback button in an inline keyboard. If the button that
  * originated the query was attached to a message sent by the bot, the field message will be present. If the button was
@@ -88,9 +60,3 @@ type TelegramCallbackQuery = CallbackQuery &
     (DataPayload | GameShortNamePayload);
 
 export default TelegramCallbackQuery;
-
-export const CallbackQueryDecoder = JT.intersection(
-    BaseCallbackQueryDecoder,
-    JT.union(MessagePayloadDecoder, InlineMessagePayloadDecoder),
-    JT.union(DataPayloadDecoder, GameShortNamePayloadDecoder)
-);

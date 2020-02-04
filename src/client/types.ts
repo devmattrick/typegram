@@ -1,4 +1,3 @@
-import { DecoderError, Result } from '@mojotech/json-type-validation';
 import Message from '../models/core/Message';
 import Update from '../models/core/Update';
 
@@ -23,11 +22,9 @@ export type TelegramResponse =
           };
       };
 
-export interface Method<M extends string, P extends Params, T> {
+export interface Method<M extends string, P extends Params> {
     method: M;
     params: P;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    parse: (arg0: any) => Result.Result<T, DecoderError>;
 }
 
 export interface BotError {
@@ -44,7 +41,7 @@ export interface Bot {
     emit(type: 'update', update: Update): void;
     emit(type: 'message', message: Message): void;
     execute: <M extends string, P extends Params, T>(
-        method: Method<M, P, T>
+        method: Method<M, P>
     ) => Promise<T>;
 }
 

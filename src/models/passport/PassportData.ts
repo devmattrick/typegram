@@ -1,11 +1,5 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import EncryptedCredentials, {
-    EncryptedCredentialsDecoder,
-} from './EncryptedCredentials';
-import EncryptedPassportElement, {
-    EncryptedPassportElementDecoder,
-} from './EncryptedPassportElement';
+import EncryptedCredentials from './EncryptedCredentials';
+import EncryptedPassportElement from './EncryptedPassportElement';
 
 /**
  * Contains information about Telegram Passport data shared with the bot by the user.
@@ -21,8 +15,3 @@ export default interface PassportData {
      */
     credentials: EncryptedCredentials;
 }
-
-export const PassportDataDecoder: JT.Decoder<PassportData> = JT.object({
-    data: JT.array(EncryptedPassportElementDecoder),
-    credentials: EncryptedCredentialsDecoder,
-});

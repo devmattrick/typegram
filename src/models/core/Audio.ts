@@ -1,6 +1,4 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import PhotoSize, { PhotoSizeDecoder } from './PhotoSize';
+import PhotoSize from './PhotoSize';
 
 /**
  * This object represents an audio file to be treated as music by the Telegram clients.
@@ -41,13 +39,3 @@ export default interface Audio {
      */
     thumb?: PhotoSize;
 }
-
-export const AudioDecoder: JT.Decoder<Audio> = JT.object({
-    file_id: JT.string(),
-    duration: JT.number(),
-    performer: JT.optional(JT.string()),
-    title: JT.optional(JT.string()),
-    mime_type: JT.optional(JT.string()),
-    file_size: JT.optional(JT.number()),
-    thumb: JT.optional(PhotoSizeDecoder),
-});

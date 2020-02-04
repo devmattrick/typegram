@@ -1,7 +1,5 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import PhotoSize, { PhotoSizeDecoder } from '../core/PhotoSize';
-import MaskPosition, { MaskPositionDecoder } from './MaskPosition';
+import PhotoSize from '../core/PhotoSize';
+import MaskPosition from './MaskPosition';
 
 /**
  * This object represents a sticker.
@@ -47,14 +45,3 @@ export default interface Sticker {
      */
     file_size?: number;
 }
-
-export const StickerDecoder: JT.Decoder<Sticker> = JT.object({
-    file_id: JT.string(),
-    width: JT.number(),
-    height: JT.number(),
-    thumb: JT.optional(PhotoSizeDecoder),
-    emoji: JT.optional(JT.string()),
-    set_name: JT.optional(JT.string()),
-    mask_position: JT.optional(MaskPositionDecoder),
-    file_size: JT.optional(JT.number()),
-});

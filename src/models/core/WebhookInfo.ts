@@ -1,5 +1,3 @@
-import * as JT from '@mojotech/json-type-validation';
-
 /**
  * Contains information about the current status of a webhook.
  */
@@ -40,13 +38,3 @@ export default interface WebhookInfo {
      */
     allowed_updates?: string[];
 }
-
-export const WebhookInfoDecoder: JT.Decoder<WebhookInfo> = JT.object({
-    url: JT.string(),
-    has_custom_certificate: JT.boolean(),
-    pending_update_count: JT.number(),
-    last_error_date: JT.optional(JT.number()),
-    last_error_message: JT.optional(JT.string()),
-    max_connections: JT.optional(JT.number()),
-    allowed_updates: JT.optional(JT.array(JT.string())),
-});

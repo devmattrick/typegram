@@ -1,7 +1,5 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import ChatPhoto, { ChatPhotoDecoder } from './ChatPhoto';
-import Message, { MessageDecoder } from './Message';
+import ChatPhoto from './ChatPhoto';
+import Message from './Message';
 
 export type ChatType = 'private' | 'group' | 'supergroup' | 'channel';
 
@@ -24,25 +22,12 @@ interface Chat<Type extends ChatType> {
     photo?: ChatPhoto;
 }
 
-const BaseChatDecoder: <T extends ChatType>(
-    arg0: T
-) => JT.Decoder<Chat<T>> = type =>
-    JT.object({
-        id: JT.number(),
-        type: JT.constant(type),
-        photo: JT.optional(ChatPhotoDecoder),
-    });
-
 interface WithTitle {
     /**
      * Title, for supergroups, channels and group chats
      */
     title: string;
 }
-
-const WithTitleDecoder: JT.Decoder<WithTitle> = JT.object({
-    title: JT.string(),
-});
 
 interface WithUsername {
     /**
@@ -51,20 +36,12 @@ interface WithUsername {
     username: string;
 }
 
-const WithUsernameDecoder: JT.Decoder<WithUsername> = JT.object({
-    username: JT.string(),
-});
-
 interface WithDescription {
     /**
      * Description, for supergroups and channel chats. Returned only in getChat.
      */
     description: string;
 }
-
-const WithDescriptionDecoder: JT.Decoder<WithDescription> = JT.object({
-    description: JT.string(),
-});
 
 interface WithInvitationLink {
     /**
@@ -74,10 +51,6 @@ interface WithInvitationLink {
     invite_link?: string;
 }
 
-const WithInvitationLinkDecoder: JT.Decoder<WithInvitationLink> = JT.object({
-    invite_link: JT.optional(JT.string()),
-});
-
 interface WithPinnedMessage {
     /**
      * Optional. Pinned message, for groups, supergroups and channels. Returned only in getChat.
@@ -85,20 +58,12 @@ interface WithPinnedMessage {
     pinned_message?: Message;
 }
 
-const WithPinnedMessageDecoder: JT.Decoder<WithPinnedMessage> = JT.object({
-    pinned_message: JT.lazy(() => JT.optional(MessageDecoder)),
-});
-
 interface WithStickerSet {
     /**
      * Optional. true, if the bot can change the group sticker set. Returned only in getChat.
      */
     can_set_sticker_set?: boolean;
 }
-
-const WithStickerSetDecoder: JT.Decoder<WithStickerSet> = JT.object({
-    can_set_sticker_set: JT.optional(JT.boolean()),
-});
 
 interface PrivateChat extends Chat<'private'>, WithUsername {
     /**
@@ -112,15 +77,6 @@ interface PrivateChat extends Chat<'private'>, WithUsername {
     last_name?: string;
 }
 
-const PrivateChatDecoder: JT.Decoder<PrivateChat> = JT.intersection(
-    BaseChatDecoder('private'),
-    WithUsernameDecoder,
-    JT.object({
-        first_name: JT.string(),
-        last_name: JT.optional(JT.string()),
-    })
-);
-
 interface GroupChat
     extends Chat<'group'>,
         WithTitle,
@@ -131,16 +87,6 @@ interface GroupChat
      */
     all_members_are_administrators: boolean;
 }
-
-const GroupChatDecoder: JT.Decoder<GroupChat> = JT.intersection(
-    BaseChatDecoder('group'),
-    WithTitleDecoder,
-    WithPinnedMessageDecoder,
-    WithStickerSetDecoder,
-    JT.object({
-        all_members_are_administrators: JT.boolean(),
-    })
-);
 
 interface SupergroupChat
     extends Chat<'supergroup'>,
@@ -156,19 +102,6 @@ interface SupergroupChat
     sticker_set_name?: string;
 }
 
-const SupergroupChatDecoder: JT.Decoder<SupergroupChat> = JT.intersection(
-    BaseChatDecoder('supergroup'),
-    WithTitleDecoder,
-    WithUsernameDecoder,
-    WithDescriptionDecoder,
-    WithInvitationLinkDecoder,
-    WithPinnedMessageDecoder,
-    WithStickerSetDecoder,
-    JT.object({
-        sticker_set_name: JT.optional(JT.string()),
-    })
-);
-
 interface ChannelChat
     extends Chat<'channel'>,
         WithTitle,
@@ -177,22 +110,6 @@ interface ChannelChat
         WithInvitationLink,
         WithPinnedMessage {}
 
-const ChannelChatDecoder: JT.Decoder<ChannelChat> = JT.intersection(
-    BaseChatDecoder('channel'),
-    WithTitleDecoder,
-    WithUsernameDecoder,
-    WithDescriptionDecoder,
-    WithInvitationLinkDecoder,
-    WithPinnedMessageDecoder
-);
-
 type TelegramChat = PrivateChat | GroupChat | SupergroupChat | ChannelChat;
 
 export default TelegramChat;
-
-export const ChatDecoder = JT.union(
-    PrivateChatDecoder,
-    GroupChatDecoder,
-    SupergroupChatDecoder,
-    ChannelChatDecoder
-);

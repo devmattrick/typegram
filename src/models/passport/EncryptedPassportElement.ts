@@ -1,6 +1,4 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import PassportFile, { PassportFileDecoder } from './PassportFile';
+import PassportFile from './PassportFile';
 
 type EncryptedPassportElementType =
     | 'personal_details'
@@ -87,39 +85,3 @@ export default interface EncryptedPassportElement {
      */
     hash: string;
 }
-
-const BasicEncryptedPassportElementDecoder: <
-    T extends EncryptedPassportElementType
->(
-    arg0: T
-) => JT.Decoder<EncryptedPassportElement> = type =>
-    JT.object({
-        type: JT.constant(type),
-        data: JT.optional(JT.string()),
-        phone_number: JT.optional(JT.string()),
-        email: JT.optional(JT.string()),
-        files: JT.optional(JT.array(PassportFileDecoder)),
-        front_side: JT.optional(PassportFileDecoder),
-        reverse_side: JT.optional(PassportFileDecoder),
-        selfie: JT.optional(PassportFileDecoder),
-        translation: JT.optional(JT.array(PassportFileDecoder)),
-        hash: JT.string(),
-    });
-
-export const EncryptedPassportElementDecoder = JT.union(
-    BasicEncryptedPassportElementDecoder('address'),
-    BasicEncryptedPassportElementDecoder('bank_statement'),
-    BasicEncryptedPassportElementDecoder('driver_license'),
-    BasicEncryptedPassportElementDecoder('email'),
-    BasicEncryptedPassportElementDecoder('identity_card'),
-    BasicEncryptedPassportElementDecoder('internal_passport'),
-    BasicEncryptedPassportElementDecoder('passport'),
-    JT.union(
-        BasicEncryptedPassportElementDecoder('passport_registration'),
-        BasicEncryptedPassportElementDecoder('personal_details'),
-        BasicEncryptedPassportElementDecoder('phone_number'),
-        BasicEncryptedPassportElementDecoder('rental_agreement'),
-        BasicEncryptedPassportElementDecoder('temporary_registration'),
-        BasicEncryptedPassportElementDecoder('utility_bill')
-    )
-);

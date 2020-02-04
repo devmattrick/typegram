@@ -1,6 +1,4 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import PhotoSize, { PhotoSizeDecoder } from './PhotoSize';
+import PhotoSize from './PhotoSize';
 
 /**
  * This object represent a user's profile pictures.
@@ -16,10 +14,3 @@ export default interface UserProfilePhotos {
      */
     photos: PhotoSize[][];
 }
-
-export const UserProfilePhotosDecoder: JT.Decoder<
-    UserProfilePhotos
-> = JT.object({
-    total_count: JT.number(),
-    photos: JT.array(JT.array(PhotoSizeDecoder)),
-});

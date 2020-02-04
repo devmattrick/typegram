@@ -1,10 +1,5 @@
-import * as JT from '@mojotech/json-type-validation';
-
 import { GetUpdates } from './method/get-updates';
-import { UpdateDecoder } from '../models/core/Update';
 import { Bot } from './types';
-
-const UpdatesDecoder = JT.array(UpdateDecoder);
 
 export class Poller {
     private readonly bot: Bot;
@@ -33,7 +28,6 @@ export class Poller {
                 offset: this.currentOffset,
                 timeout: 30,
             },
-            parse: result => UpdatesDecoder.run(result),
         };
 
         const updates = await this.bot.execute(getUpdates);

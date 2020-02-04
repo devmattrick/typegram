@@ -1,8 +1,6 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import Animation, { AnimationDecoder } from '../core/Animation';
-import MessageEntity, { MessageEntityDecoder } from '../core/MessageEntity';
-import PhotoSize, { PhotoSizeDecoder } from '../core/PhotoSize';
+import Animation from '../core/Animation';
+import MessageEntity from '../core/MessageEntity';
+import PhotoSize from '../core/PhotoSize';
 
 /**
  * This object represents a game. Use BotFather to create and edit games, their short names will act as unique
@@ -41,12 +39,3 @@ export default interface Game {
      */
     animation?: Animation;
 }
-
-export const GameDecoder: JT.Decoder<Game> = JT.object({
-    title: JT.string(),
-    description: JT.string(),
-    photo: JT.array(PhotoSizeDecoder),
-    text: JT.optional(JT.string()),
-    text_entities: JT.optional(JT.array(MessageEntityDecoder)),
-    animation: JT.optional(AnimationDecoder),
-});

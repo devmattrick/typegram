@@ -1,5 +1,3 @@
-import * as JT from '@mojotech/json-type-validation';
-
 /**
  * Contains data required for decrypting and authenticating EncryptedPassportElement. See the Telegram Passport
  * Documentation for a complete description of the data decryption and authentication processes.
@@ -21,11 +19,3 @@ export default interface EncryptedCredentials {
      */
     secret: string;
 }
-
-export const EncryptedCredentialsDecoder: JT.Decoder<
-    EncryptedCredentials
-> = JT.object({
-    data: JT.string(),
-    hash: JT.string(),
-    secret: JT.string(),
-});

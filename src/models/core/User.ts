@@ -1,5 +1,3 @@
-import * as JT from '@mojotech/json-type-validation';
-
 /**
  * This object represents a Telegram user or bot.
  */
@@ -34,12 +32,3 @@ export default interface User {
      */
     language_code?: string;
 }
-
-export const UserDecoder: JT.Decoder<User> = JT.object({
-    id: JT.number(),
-    is_bot: JT.boolean(),
-    first_name: JT.string(),
-    last_name: JT.optional(JT.string()),
-    username: JT.optional(JT.string()),
-    language_code: JT.optional(JT.string()),
-});

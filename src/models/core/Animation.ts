@@ -1,6 +1,4 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import PhotoSize, { PhotoSizeDecoder } from './PhotoSize';
+import PhotoSize from './PhotoSize';
 
 /**
  * This object represents an animation file (GIF or H.264/MPEG-4 AVC video without sound).
@@ -46,14 +44,3 @@ export default interface Animation {
      */
     file_size?: number;
 }
-
-export const AnimationDecoder: JT.Decoder<Animation> = JT.object({
-    file_id: JT.string(),
-    width: JT.number(),
-    height: JT.number(),
-    duration: JT.number(),
-    thumb: JT.optional(PhotoSizeDecoder),
-    file_name: JT.optional(JT.string()),
-    mime_type: JT.optional(JT.string()),
-    file_size: JT.optional(JT.number()),
-});

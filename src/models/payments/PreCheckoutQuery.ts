@@ -1,7 +1,5 @@
-import * as JT from '@mojotech/json-type-validation';
-
-import User, { UserDecoder } from '../core/User';
-import OrderInfo, { OrderInfoDecoder } from './OrderInfo';
+import User from '../core/User';
+import OrderInfo from './OrderInfo';
 
 /**
  * This object contains information about an incoming pre-checkout query.
@@ -44,13 +42,3 @@ export default interface PreCheckoutQuery {
      */
     order_info?: OrderInfo;
 }
-
-export const PreCheckoutQueryDecoder: JT.Decoder<PreCheckoutQuery> = JT.object({
-    id: JT.string(),
-    from: UserDecoder,
-    currency: JT.string(),
-    total_amount: JT.number(),
-    invoice_payload: JT.string(),
-    shipping_option_id: JT.optional(JT.string()),
-    order_info: JT.optional(OrderInfoDecoder),
-});
