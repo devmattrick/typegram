@@ -48,9 +48,13 @@ export interface Bot {
     ) => Promise<T>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export interface BotModule<E extends Record<string, any>> {
-    name: string;
+export interface BotModuleEvents {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+}
+
+export interface BotModule<N extends string, E extends BotModuleEvents> {
+    name: N;
     on: OnEventFunction<E>;
     onRegister: (bot: Bot) => void;
 }
@@ -62,8 +66,7 @@ export interface BotModule<E extends Record<string, any>> {
  * consumers can specify one, and the callback will be
  * strongly-typed to only take an event of the correct event type!
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type OnEventFunction<T extends Record<string, any>> = <K extends keyof T>(
+type OnEventFunction<T extends BotModuleEvents> = <K extends keyof T>(
     event: K,
     callback: (event: T[K]) => void
 ) => void;

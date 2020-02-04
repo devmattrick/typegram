@@ -24,7 +24,9 @@ export class TelegramBot implements Bot {
         this.poller = new Poller(this);
     }
 
-    public readonly registerModule = <E>(module: BotModule<E>) => {
+    public readonly registerModule = <N extends string, E>(
+        module: BotModule<N, E>
+    ) => {
         module.onRegister(this);
     };
 
@@ -35,7 +37,7 @@ export class TelegramBot implements Bot {
     public readonly on: Bot['on'] = (
         type: string,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        callback: (arg0: any) => void
+        callback: (...args: any[]) => void
     ) => this.eventEmitter.on(type, callback);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
