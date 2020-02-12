@@ -10,7 +10,7 @@ export class Poller {
         this.bot = bot;
     }
 
-    public readonly start = () => {
+    public readonly start = (): void => {
         const runPoller = (): Promise<void> =>
             new Promise((resolve, reject) => {
                 this.poll()
@@ -21,7 +21,7 @@ export class Poller {
         runPoller();
     };
 
-    public readonly poll = async () => {
+    public readonly poll = async (): Promise<void> => {
         const getUpdates: GetUpdates = {
             method: 'getUpdates',
             params: {

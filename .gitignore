@@ -1,4 +1,14 @@
-/node_modules/
-/.vscode/
+# Node
+node_modules/
 
-/dist/**
+# Yarn
+yarn-debug.log*
+yarn-error.log*
+
+# NPM
+npm-debug.log*
+package-lock.json
+npm-shrinkwrap.json
+
+# Dist files
+dist/

@@ -26,11 +26,11 @@ export class TelegramBot implements Bot {
 
     public readonly registerModule = <N extends string, E>(
         module: BotModule<N, E>
-    ) => {
+    ): void => {
         module.onRegister(this);
     };
 
-    public readonly start = () => {
+    public readonly start = (): void => {
         this.poller.start();
     };
 

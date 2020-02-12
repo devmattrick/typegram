@@ -2,25 +2,11 @@
     "name": "typegram",
     "version": "1.0.0",
     "description": "TypeScript Telegram Bot API client.",
-    "main": "index.js",
+    "main": "dist/index.js",
     "repository": "https://github.com/devmattrick/typegram.git",
     "author": "Matthew McCune <contact@matthew.cx>",
     "license": "MIT",
     "private": false,
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
-    "lint-staged": {
-        "*.ts": [
-            "prettier --write",
-            "eslint --fix"
-        ],
-        "*.{md,html,json}": [
-            "prettier --write"
-        ]
-    },
     "scripts": {
         "lint": "eslint src/**/*.ts",
         "lint:fix": "eslint src/**/*.ts --fix",
@@ -29,13 +15,15 @@
         "start": "node src/index.js"
     },
     "dependencies": {
+        "@types/node": "^13.7.1",
+        "@types/qs": "^6.9.0",
         "axios": "^0.19.2",
+        "class-transformer": "^0.2.3",
         "form-data": "^3.0.0",
-        "qs": "^6.9.1"
+        "qs": "^6.9.1",
+        "reflect-metadata": "^0.1.13"
     },
     "devDependencies": {
-        "@types/node": "^13.7.0",
-        "@types/qs": "^6.9.0",
         "@typescript-eslint/eslint-plugin": "^2.19.0",
         "@typescript-eslint/parser": "^2.19.0",
         "eslint": "^6.8.0",
@@ -48,5 +36,18 @@
         "prettier": "^1.19.1",
         "ts-node-dev": "^1.0.0-pre.44",
         "typescript": "^3.7.5"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.ts": [
+            "eslint --fix"
+        ],
+        "*.{md,html,json}": [
+            "prettier --write"
+        ]
     }
 }

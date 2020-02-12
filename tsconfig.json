@@ -1,25 +1,15 @@
 {
     "compilerOptions": {
         "outDir": "dist/",
-        "lib": ["es2015"],
+        "lib": ["ES2020"],
         "module": "commonjs",
         "moduleResolution": "node",
         "allowJs": false,
-        "checkJs": false,
-        "allowSyntheticDefaultImports": false,
         "esModuleInterop": false,
         "importHelpers": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "strict": true,
-        "alwaysStrict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noErrorTruncation": true,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "noFallthroughCasesInSwitch": true,
-        "noStrictGenericChecks": true,
-        "forceConsistentCasingInFileNames": true,
         "newLine": "LF"
     },
     "include": ["src/**/*"]
