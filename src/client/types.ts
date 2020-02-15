@@ -1,9 +1,17 @@
 import Message from '../models/core/Message';
 import Update from '../models/core/Update';
 
-type BaseParamType = string | number | boolean | null | undefined;
-export type ParamType = BaseParamType | BaseParamType[];
-export type Params = Record<string, ParamType>;
+type Param =
+    | string
+    | number
+    | boolean
+    | null
+    | undefined
+    | Params
+    | Array<Param | Params>;
+export interface Params {
+    [x: string]: Param;
+}
 
 export type TelegramResponse =
     | {
